@@ -1,5 +1,0 @@
-this is a sample text
-
-multi line text
-this line talks about java comments
-java is a robust programming language and it is very versatile 
