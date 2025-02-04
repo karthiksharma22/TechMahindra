@@ -1,0 +1,4 @@
+this is a sample txt file
+java is a statically typed language
+java is very essential to build web applications
+spring boot is important for building backend applications.
