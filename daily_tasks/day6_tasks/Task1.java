@@ -22,6 +22,7 @@ public class Task1 {
 			int rows = st.executeUpdate();
 			
 			System.out.println("Rows inserted : "+rows);
+			System.out.println("Do you want to insert more? true/false");
 			flag = scan.nextBoolean();
 		}
 		System.out.println("Student Records successfully added to the database");
