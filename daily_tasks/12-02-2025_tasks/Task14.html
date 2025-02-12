@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechM Task 14</title>
+  </head>
+  <body>
+    <script>
+      let num1 = 0;
+      let num2 = -1;
+      let num3 = 4;
+
+      if (num1 >= num2 && num1 >= num3) {
+        alert(num1 + ", " + Math.max(num2, num3) + ", " + Math.min(num2, num3));
+      } else if (num2 >= num1 && num2 >= num3) {
+        alert(num2 + ", " + Math.max(num1, num3) + ", " + Math.min(num1, num3));
+      } else {
+        alert(num3 + ", " + Math.max(num1, num2) + ", " + Math.min(num1, num2));
+      }
+    </script>
+  </body>
+</html>
