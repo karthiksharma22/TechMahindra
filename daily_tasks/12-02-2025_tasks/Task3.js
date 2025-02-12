@@ -13,7 +13,4 @@ if (month < 10) {
 console.log(
   `month-date-year: ${month}-${date}-${year}, month/date/year: ${month}/${date}/${year}`
 );
-console.log("\t \t (or)");
-console.log(
-  `date-month-year: ${date}-${month}-${year}, date/month/year: ${date}/${month}/${year}`
-);
+
