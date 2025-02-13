@@ -1,16 +1,10 @@
-const current_date = new Date();
-let curr_year = current_date.getFullYear();
-let christmas_date = new Date(curr_year, 11, 25);
+//calculating which 1st of january between the years 2014 - 2025 falls on a sunday
 
-if (current_date > christmas_date) {
-  curr_year++;
-  christmas_date = new Date(curr_year, 11, 25);
+for (let year = 2014; year <= 2025; year++) {
+  const date = new Date(year, 0, 1);
+  const dayOfWeek = date.getDay();
+
+  if (dayOfWeek === 0) {
+    console.log(`1st January of the year ${year} is a Sunday.`);
+  }
 }
-
-const daysLeft = Math.ceil(
-  (christmas_date - current_date) / (1000 * 3600 * 24)
-);
-
-console.log(
-  `${daysLeft} days are left before the Christmas which lies on ${christmas_date}`
-);
