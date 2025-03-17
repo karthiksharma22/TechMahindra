@@ -1,0 +1,292 @@
+<nav class="luxury-navbar" [ngClass]="{ 'transparent-navbar': isHomepage }">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="navbar-logo">
+      <img
+        src="https://cdn.sanity.io/images/ocl5w36p/prod3/eaf9ae941361d173fdbd613ba600197b69471d50-100x88.png"
+        alt="Hotel Logo"
+      />
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="navbar-links" [ngClass]="{ show: isMenuOpen }">
+      <!-- Employee Navbar -->
+      <ng-container *ngIf="loginType === 'employee'">
+        <div class="nav-item" *ngIf="isManagerOrAdmin">
+          <a routerLink="/dashboard" routerLinkActive="active">
+            <i class="fa fa-chart-line nav-icon"></i>Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/task-list" routerLinkActive="active">
+            <i class="fa fa-tasks nav-icon"></i>Tasks
+          </a>
+        </div>
+        <div class="nav-item" *ngIf="isManagerOrAdmin">
+          <a routerLink="/inventory-admin" routerLinkActive="active">
+            <i class="fa fa-box nav-icon"></i>Inventory
+          </a>
+        </div>
+        <div class="nav-item" *ngIf="isManagerOrAdmin">
+          <a routerLink="/admin-employee" routerLinkActive="active">
+            <i class="fa fa-users nav-icon"></i>Employees
+          </a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/checkin" routerLinkActive="active">
+            <i class="fa fa-plus nav-icon"></i>Checkin
+          </a>
+        </div>
+
+        <div class="nav-item">
+          <a routerLink="/checkout" routerLinkActive="active">
+            <i class="fa fa-plus nav-icon"></i>Checkout
+          </a>
+        </div>
+      </ng-container>
+
+      <!-- User Navbar -->
+      <ng-container *ngIf="loginType !== 'employee'">
+        <div class="nav-item">
+          <a routerLink="/home" routerLinkActive="active">
+            <i class="fa fa-home nav-icon"></i>Home
+          </a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/hotels" routerLinkActive="active">
+            <i class="fa fa-hotel nav-icon"></i>Hotels
+          </a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/booking" routerLinkActive="active">
+            <i class="fa fa-calendar nav-icon"></i>Booking
+          </a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/complaint" routerLinkActive="active">
+            <i class="fa fa-exclamation-triangle nav-icon"></i>Complaint
+          </a>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Right side with user profile or login -->
+    <div class="navbar-right">
+      <div
+        *ngIf="employee || user; else loginButton"
+        class="user-profile"
+        (click)="toggleDropdown()"
+      >
+        <div class="avatar">
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg"
+            alt="User Avatar"
+          />
+        </div>
+        <div class="user-info">
+          <p class="user-name">{{ employee?.name || user?.username }}</p>
+          <p class="user-role">{{ employee?.role || "User" }}</p>
+        </div>
+        <i class="fa fa-chevron-down dropdown-icon"></i>
+      </div>
+
+      <!-- Login Button -->
+      <ng-template #loginButton>
+        <button class="login-btn" (click)="openLoginPopup()">Login</button>
+      </ng-template>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-toggle" (click)="toggleMenu()">
+        <i class="fa" [ngClass]="isMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dropdown Menu -->
+  <div class="dropdown-menu" [ngClass]="{ show: isDropdownOpen }">
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item" (click)="logout()">
+      <i class="fa fa-sign-out-alt"></i>Logout
+    </a>
+  </div>
+
+  <!-- Login Popup -->
+  <div *ngIf="isLoginPopupOpen" class="login-popup">
+    <div class="login-popup-content">
+      <!-- Close Button -->
+      <!-- <button class="close-btn" (click)="closeLoginPopup()">&times;</button> -->
+
+      <!-- Header -->
+      <div class="popup-header">
+        <h2>Welcome</h2>
+      </div>
+
+      <!-- Toggle Buttons -->
+      <div class="login-toggle">
+        <button
+          (click)="toggleLoginType()"
+          [ngClass]="{ active: !isEmployeeLogin }"
+        >
+          Login as User
+        </button>
+        <button
+          (click)="toggleLoginType()"
+          [ngClass]="{ active: isEmployeeLogin }"
+        >
+          Login as Employee
+        </button>
+        <button
+          (click)="toggleRegistration()"
+          [ngClass]="{ active: isRegistrationOpen }"
+        >
+          Register as User
+        </button>
+      </div>
+
+      <!-- Employee Login Form -->
+      <form
+        *ngIf="isEmployeeLogin && !isRegistrationOpen"
+        (ngSubmit)="loginEmployee()"
+      >
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="loginData.email"
+          name="email"
+          required
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="loginData.password"
+          name="password"
+          required
+        />
+
+        <label for="locationId">Location ID:</label>
+        <input
+          type="text"
+          id="locationId"
+          [(ngModel)]="loginData.locationId"
+          name="locationId"
+          required
+        />
+
+        <button type="submit">Login as Employee</button>
+      </form>
+
+      <!-- User Login Form -->
+      <form
+        *ngIf="!isEmployeeLogin && !isRegistrationOpen"
+        (ngSubmit)="loginUser()"
+      >
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="loginData.email"
+          name="email"
+          required
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="loginData.password"
+          name="password"
+          required
+        />
+
+        <button type="submit">Login as User</button>
+      </form>
+
+      <!-- User Registration Form -->
+      <form *ngIf="isRegistrationOpen" (ngSubmit)="registerUser()">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="registrationData.username"
+          name="username"
+          required
+        />
+
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="registrationData.email"
+          name="email"
+          required
+        />
+
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+          "
+        >
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            [(ngModel)]="registrationData.password"
+            name="password"
+            required
+          />
+
+          <label for="aadharNumber">Aadhar:</label>
+          <input
+            type="text"
+            id="aadharNumber"
+            [(ngModel)]="registrationData.aadharNumber"
+            name="aadharNumber"
+            required
+          />
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+          "
+        >
+          <label for="age">Age:</label>
+          <input
+            type="number"
+            id="age"
+            [(ngModel)]="registrationData.age"
+            name="age"
+            required
+          />
+
+          <label for="gender">Gender:</label>
+          <select
+            id="gender"
+            [(ngModel)]="registrationData.gender"
+            name="gender"
+            required
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <button *ngIf="!isRegistrationOpen" (click)="closeLoginPopup()">
+        Close
+      </button>
+    </div>
+  </div>
+</nav>

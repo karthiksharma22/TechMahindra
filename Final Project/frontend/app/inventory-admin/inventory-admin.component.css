@@ -1,0 +1,381 @@
+/* General Styles - Luxurious Inventory Theme */
+body {
+  background: linear-gradient(135deg, #f8f4ea 0%, #ffffff 100%);
+  color: #333;
+  font-family: "Playfair Display", "Roboto", serif;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Elegant Background Pattern */
+body:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.container {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+h1 {
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  font-family: "Playfair Display", serif;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+h1:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.2),
+    rgba(212, 175, 55, 0.8),
+    rgba(212, 175, 55, 0.2)
+  );
+}
+
+/* Form Styles */
+.inventory-form {
+  width: 80%;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 1rem;
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.3px;
+}
+
+.form-control {
+  width: 96%;
+  padding: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-family: "Roboto", sans-serif;
+}
+
+.form-control:focus {
+  border-color: #d4af37;
+  outline: none;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  background-color: #fff;
+}
+
+/* Button Styles */
+.btn {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #ffffff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 5px 0px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  font-family: "Playfair Display", serif;
+  letter-spacing: 0.5px;
+}
+
+.m-r {
+  margin-right: 10px;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  color: #ffffff;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #b8860b 0%, #a67c00 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(184, 134, 11, 0.4);
+}
+
+.btn-white {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn-white:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* Table Styles */
+.inventory-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-family: "Playfair Display", serif;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  font-size: 16px;
+}
+
+.inventory-table th {
+  background: linear-gradient(90deg, #1a1a1a, #3a3a3a);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.inventory-table tr:nth-child(odd) {
+  background-color: rgba(249, 249, 249, 0.7);
+}
+
+.inventory-table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.inventory-table tr:hover {
+  background-color: rgba(212, 175, 55, 0.05);
+}
+
+.inventory-table tr:last-child td:first-child {
+  border-bottom-left-radius: 15px;
+}
+
+.inventory-table tr:last-child td:last-child {
+  border-bottom-right-radius: 15px;
+}
+
+.stock-input {
+  width: 80px;
+  padding: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  font-family: "Roboto", sans-serif;
+}
+
+.stock-input:focus {
+  border-color: #d4af37;
+  outline: none;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  background-color: #fff;
+}
+
+/* Interactive Elements */
+.btn-gold:active,
+.btn-white:active {
+  transform: translateY(1px);
+}
+
+/* Accent Colors for Highlighting */
+.accent-text {
+  color: #d4af37;
+}
+
+/* Hover Effects for Buttons in Table */
+.inventory-table .btn-gold {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+
+.inventory-table .btn-gold:hover {
+  background: linear-gradient(135deg, #b8860b 0%, #a67c00 100%);
+}
+
+.inventory-table .btn-white {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}
+
+.inventory-table .btn-white:hover {
+  background-color: #f5f5f5;
+}
+
+.search-sort-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  margin-top: 70px;
+  position: relative;
+}
+
+.search-sort-container:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.2),
+    rgba(212, 175, 55, 0.8),
+    rgba(212, 175, 55, 0.2)
+  );
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  font-family: "Roboto", sans-serif;
+}
+
+.sort-dropdown {
+  width: 200px;
+  padding: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Roboto", sans-serif;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px top 50%;
+  padding-right: 35px;
+}
+
+.error {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  margin-top: 5px;
+  color: #d9534f;
+  text-decoration: underline;
+}
+
+.sort-dropdown:focus,
+.search-input:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  background-color: #fff;
+}
+
+/* Email sending loader styles */
+.email-sending-loader {
+  background-color: rgba(255, 215, 0, 0.2);
+  border-left: 4px solid #ffd700;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.email-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffd700;
+  border-radius: 50%;
+  border-top-color: transparent;
+  margin-right: 12px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 25px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .inventory-form {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .form-control {
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .inventory-table th,
+  .inventory-table td {
+    padding: 15px;
+    font-size: 14px;
+  }
+}
