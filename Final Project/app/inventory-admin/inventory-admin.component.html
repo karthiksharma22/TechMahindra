@@ -1,0 +1,252 @@
+<div class="container">
+  <h1>Inventory Management</h1>
+
+  <!-- Inventory Form -->
+  <form
+    [formGroup]="inventoryForm"
+    (ngSubmit)="createOrUpdateInventory()"
+    class="inventory-form"
+  >
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        formControlName="name"
+        class="form-control"
+        placeholder="Enter item name"
+        required
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('name')?.invalid &&
+          inventoryForm.get('name')?.touched
+        "
+        class="error"
+      >
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input
+        id="category"
+        formControlName="category"
+        class="form-control"
+        placeholder="Enter category"
+        required
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('category')?.invalid &&
+          inventoryForm.get('category')?.touched
+        "
+        class="error"
+      >
+        Category is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        formControlName="description"
+        class="form-control"
+        placeholder="Enter description"
+        required
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('description')?.invalid &&
+          inventoryForm.get('description')?.touched
+        "
+        class="error"
+      >
+        Description is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        id="price"
+        formControlName="price"
+        type="number"
+        class="form-control"
+        placeholder="Enter price"
+        required
+        min="1"
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('price')?.invalid &&
+          inventoryForm.get('price')?.touched
+        "
+        class="error"
+      >
+        <span *ngIf="inventoryForm.get('price')?.errors?.['required']"
+          >Price is required.</span
+        >
+        <span *ngIf="inventoryForm.get('price')?.errors?.['min']"
+          >Price must be at least 1.</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="stockQuantity">Stock Quantity</label>
+      <input
+        id="stockQuantity"
+        formControlName="stockQuantity"
+        type="number"
+        class="form-control"
+        placeholder="Enter stock quantity"
+        required
+        min="0"
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('stockQuantity')?.invalid &&
+          inventoryForm.get('stockQuantity')?.touched
+        "
+        class="error"
+      >
+        <span *ngIf="inventoryForm.get('stockQuantity')?.errors?.['required']"
+          >Stock Quantity is required.</span
+        >
+        <span *ngIf="inventoryForm.get('stockQuantity')?.errors?.['min']"
+          >Stock Quantity cannot be negative.</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="minThreshold">Min Threshold</label>
+      <input
+        id="minThreshold"
+        formControlName="minThreshold"
+        type="number"
+        class="form-control"
+        placeholder="Enter minimum threshold"
+        required
+        min="0"
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('minThreshold')?.invalid &&
+          inventoryForm.get('minThreshold')?.touched
+        "
+        class="error"
+      >
+        <span *ngIf="inventoryForm.get('minThreshold')?.errors?.['required']"
+          >Min Threshold is required.</span
+        >
+        <span *ngIf="inventoryForm.get('minThreshold')?.errors?.['min']"
+          >Min Threshold cannot be negative.</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="supplierEmail">Supplier Email</label>
+      <input
+        id="supplierEmail"
+        formControlName="supplierEmail"
+        type="email"
+        class="form-control"
+        placeholder="Enter supplier email"
+        required
+      />
+      <div
+        *ngIf="
+          inventoryForm.get('supplierEmail')?.invalid &&
+          inventoryForm.get('supplierEmail')?.touched
+        "
+        class="error"
+      >
+        <span *ngIf="inventoryForm.get('supplierEmail')?.errors?.['required']"
+          >Supplier Email is required.</span
+        >
+        <span *ngIf="inventoryForm.get('supplierEmail')?.errors?.['email']"
+          >Enter a valid email.</span
+        >
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-gold m-r"
+      [disabled]="inventoryForm.invalid"
+    >
+      {{ selectedInventory ? "Update" : "Create" }}
+    </button>
+    <button type="button" class="btn btn-white m-r" (click)="resetForm()">
+      Reset
+    </button>
+  </form>
+
+  <div class="search-sort-container">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      class="form-control search-input"
+      placeholder="Search inventory..."
+    />
+
+    <select [(ngModel)]="sortOption" class="form-control sort-dropdown">
+      <option value="">Sort By</option>
+      <option value="quantityAsc">Stock Quantity (Ascending)</option>
+      <option value="quantityDesc">Stock Quantity (Descending)</option>
+      <option value="category">Category</option>
+    </select>
+  </div>
+
+  <div *ngIf="isSendingEmail" class="email-sending-loader">
+    <div class="email-spinner"></div>
+    <span>Sending mail to suppliers...</span>
+  </div>
+
+  <!-- Inventory Table -->
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Stock Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of getFilteredInventory()">
+        <td>{{ item.name }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.price | currency }}</td>
+        <td>
+          <input
+            type="number"
+            [(ngModel)]="item.stockQuantity"
+            class="stock-input"
+          />
+          <button
+            class="btn btn-gold"
+            (click)="updateStockQuantity(item.id, item.stockQuantity)"
+          >
+            Update
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-gold" (click)="editInventory(item)">
+            Edit
+          </button>
+          <button class="btn btn-white" (click)="deleteInventory(item.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

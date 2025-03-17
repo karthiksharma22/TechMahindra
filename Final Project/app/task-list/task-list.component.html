@@ -1,0 +1,84 @@
+<div class="container">
+  <h1>Your Tasks</h1>
+
+  <!-- Start Your Shift Button -->
+  <button
+    class="btn btn-primary"
+    (click)="startShift()"
+    [disabled]="isShiftStarted || !isShiftTimeValid"
+  >
+    Start Your Shift
+  </button>
+
+  <!-- Search and Sort -->
+  <div class="search-sort-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search tasks..."
+      [(ngModel)]="searchTerm"
+    />
+    <select class="sort-dropdown" [(ngModel)]="sortOption">
+      <option value="">Sort By</option>
+      <option value="dueDateAsc">Due Date (Ascending)</option>
+      <option value="dueDateDesc">Due Date (Descending)</option>
+      <option value="status">Status</option>
+    </select>
+  </div>
+
+  <!-- Task Table -->
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>Task ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of getFilteredTasks()">
+        <td>{{ task.taskId }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.dueDate | date : "mediumDate" }}</td>
+        <td>{{ task.status }}</td>
+        <td>
+          <!-- Start Task Button -->
+          <button
+            *ngIf="task.status === 'PENDING'"
+            class="btn btn-gold m-r"
+            (click)="startTask(task)"
+            [disabled]="!isShiftStarted"
+          >
+            Start
+          </button>
+
+          <!-- Complete Task Button -->
+          <button
+            *ngIf="task.status === 'IN_PROGRESS'"
+            class="btn btn-gold"
+            (click)="completeTask(task)"
+            [disabled]="!isShiftStarted"
+          >
+            Complete
+          </button>
+
+          <!-- Upload Proof Section (Visible after clicking Complete) -->
+          <div *ngIf="task.showUploadProof" class="upload-proof-section">
+            <input
+              type="file"
+              (change)="onFileSelected($event, task)"
+              accept=".pdf,.jpg,.png,.doc,.docx"
+            />
+            <button class="btn btn-gold" (click)="uploadProof(task)">
+              Upload Proof
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

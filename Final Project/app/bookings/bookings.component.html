@@ -1,0 +1,80 @@
+<div class="booking-container">
+  <h2>Manage Bookings</h2>
+
+  <!-- Booking Form -->
+  <div class="booking-form">
+    <input
+      type="text"
+      [(ngModel)]="newBooking.userId"
+      placeholder="User ID"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="newBooking.locationId"
+      placeholder="Location ID"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="newBooking.roomId"
+      placeholder="Room ID"
+      required
+    />
+    <input
+      type="text"
+      [(ngModel)]="newBooking.userName"
+      placeholder="User Name"
+      required
+    />
+    <input type="date" [(ngModel)]="newBooking.startDate" required />
+    <input type="date" [(ngModel)]="newBooking.endDate" required />
+    <input
+      type="number"
+      [(ngModel)]="newBooking.numberOfAdults"
+      placeholder="Adults"
+      min="1"
+      required
+    />
+    <input
+      type="number"
+      [(ngModel)]="newBooking.numberOfChildren"
+      placeholder="Children"
+      min="0"
+    />
+    <input
+      type="number"
+      [(ngModel)]="newBooking.numberOfPeople"
+      placeholder="Total People"
+      min="1"
+      required
+    />
+
+    <button *ngIf="!isEditing" (click)="addBooking()">Add Booking</button>
+    <button *ngIf="isEditing" (click)="updateBooking()">Update Booking</button>
+  </div>
+
+  <!-- Display Bookings as Cards -->
+  <div class="bookings-list">
+    <div *ngFor="let booking of bookings" class="booking-card">
+      <h3>{{ booking.userName }} ({{ booking.bookingNumber }})</h3>
+      <p><strong>Location:</strong> {{ booking.locationId }}</p>
+      <p><strong>Room:</strong> {{ booking.roomId }}</p>
+      <p>
+        <strong>Dates:</strong> {{ booking.startDate }} - {{ booking.endDate }}
+      </p>
+      <p><strong>Status:</strong> {{ booking.status }}</p>
+
+      <button class="edit-btn" (click)="editBooking(booking)">Edit</button>
+      <button class="delete-btn" (click)="deleteBooking(booking.id)">
+        Delete
+      </button>
+      <button
+        class="checkin-btn"
+        (click)="checkInGuest(booking.bookingNumber, booking.roomId)"
+      >
+        Check-In
+      </button>
+    </div>
+  </div>
+</div>

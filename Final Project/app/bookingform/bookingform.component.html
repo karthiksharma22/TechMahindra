@@ -1,0 +1,34 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="form">
+  <label>Username:</label>
+  <input type="text" formControlName="userName" /><br />
+
+  <label>Number of People:</label>
+  <input type="number" formControlName="numberOfPeople" /><br />
+
+  <label>Start Date:</label>
+  <input type="date" formControlName="startDate" /><br />
+
+  <label>End Date:</label>
+  <input type="date" formControlName="endDate" /><br />
+
+  <label>Number of Adults:</label>
+  <input type="number" formControlName="numberOfAdults" /><br />
+
+  <label>Children Count:</label>
+  <input type="number" formControlName="childrenCount" /><br />
+
+  <button type="submit">Submit Booking</button>
+</form>
+
+<div class="booking-confirmation">
+  <div class="success-message">
+    <h1>Your booking is completed!</h1>
+  </div>
+
+  <div class="thank-you">Thank you for booking with us.</div>
+
+  <div class="booking-number-container">
+    <span class="booking-number">{{ response.bookingNumber }}</span>
+    <button class="copy-button" (click)="copyToClipboard()">Copy</button>
+  </div>
+</div>

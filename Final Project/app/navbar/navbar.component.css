@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background: #3498db;
+  padding: 15px;
+}
+
+.links {
+  display: none;
+}
+
+.show-menu {
+  display: block;
+}
+
+.form-popup {
+  position: fixed;
+  background: white;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.show-signup {
+  color: red;
+}

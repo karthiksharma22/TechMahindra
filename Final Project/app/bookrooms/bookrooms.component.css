@@ -1,0 +1,190 @@
+.booksmatter {
+  text-align: center;
+  margin-top: -30vh;
+  height: 30vh;
+  background-image: url("https://media.istockphoto.com/id/1318363878/photo/luxury-modern-bedroom-interior-at-night.jpg?s=612x612&w=0&k=20&c=riYXhwiUWYzqv7iA060mb14a5b7QdjZhUeqoyNoyyts=");
+  padding: 300px;
+  color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.headbooks {
+}
+.headingsb {
+  margin-bottom: 30px;
+  font-family: "EB Garamond", serif;
+  font-weight: 300;
+  font-size: 40px;
+}
+.booklist {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  font-family: "EB Garamond", serif;
+  font-weight: 200;
+}
+.booklist p {
+  margin-top: 5px;
+}
+.circle {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  align-items: center;
+  border-radius: 50%; /* Makes it a circle */
+  font-size: 15px;
+  font-weight: bold;
+  border: 3px black;
+}
+.circle-active {
+  background-color: rgb(221, 185, 74);
+  color: white;
+}
+.rooms-container {
+  background-color: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 30px;
+  width: 60vw;
+  min-height: 70vh;
+  margin: 100px auto;
+}
+
+.inner-cont {
+  display: flex;
+  width: 100%;
+  gap: 50px;
+}
+
+.left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.indi-room {
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 10px;
+  color: rgb(67, 67, 67);
+  font-family: helvetica;
+  margin-top: 15px;
+}
+
+.i {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+  margin: 0px 5px;
+}
+
+.right {
+  width: 60%;
+}
+.room-type {
+  font-size: 27px;
+  font-family: garamond;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: rgb(67, 67, 67);
+}
+
+.pricing-details {
+  margin-top: 30px;
+  border: 1px solid rgba(66, 66, 66, 0.215);
+  padding: 30px;
+  font-family: helvetica;
+  display: flex;
+  max-height: 33vh;
+  gap: 0px;
+}
+
+.content {
+  font-size: 16px;
+  color: rgba(66, 66, 66, 0.838);
+  border-right: 1px solid rgba(66, 66, 66, 0.215);
+  width: 80%;
+  padding: 0px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+.content h1 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.content p,
+.content ul li {
+  font-size: 12px;
+  line-height: 140%;
+}
+
+.content ul {
+  margin-top: 9px;
+}
+
+.rates {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.member-rate {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: rgb(79, 79, 79);
+}
+.m-r-p {
+  font-size: 26px;
+  margin: 5px 0px;
+  font-family: garamond;
+  color: rgb(84, 84, 84);
+  opacity: 0.8;
+}
+
+.member-button {
+  background-color: #baa434;
+  color: white;
+  padding: 4px 15px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.btn-invert {
+  color: #baa434;
+  background-color: white;
+  border: 1px solid #baa434;
+}
+
+.bottom {
+  background-color: #f5e69a;
+  color: #867314;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: helvetica;
+  width: auto;
+  margin-bottom: -50px;
+  margin: 30px 0px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+}

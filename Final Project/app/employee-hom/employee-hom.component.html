@@ -1,0 +1,31 @@
+<!-- home.component.html -->
+<div class="home-container">
+  <div class="greeting-section">
+    <div class="greeting-content">
+      <h1 class="welcome-text">
+        Welcome to <span class="hotel-name">Luxury Hotel</span>
+      </h1>
+
+      <div class="time-greeting">
+        <span class="time">{{ currentTime | date : "h:mm a" }}</span>
+        <h2 class="greeting">
+          {{ greeting }}<span *ngIf="employee">, {{ employee.name }}</span>
+        </h2>
+      </div>
+
+      <div class="date-display">
+        <i class="fa fa-calendar-alt"></i>
+        <span>{{ currentDate | date : "EEEE, MMMM d, y" }}</span>
+      </div>
+
+      <div class="quote-container">
+        <div class="quote-icon">
+          <i class="fa fa-quote-left"></i>
+        </div>
+        <blockquote class="quote-text">{{ quote.text }}</blockquote>
+        <p class="quote-author">— {{ quote.author }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-task-list></app-task-list>
