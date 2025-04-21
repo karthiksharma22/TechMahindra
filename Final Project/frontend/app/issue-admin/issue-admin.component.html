@@ -1,0 +1,70 @@
+<!-- Complaints Table Section -->\
+<h1>Manage the Complaints</h1>
+<div class="container">
+  <div class="search-sort-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search complaints..."
+      #searchInput
+    />
+    <select class="sort-dropdown">
+      <option value="id">Sort by ID</option>
+      <option value="type">Sort by Type</option>
+      <option value="status">Sort by Status</option>
+      <option value="createdAt">Sort by Date</option>
+    </select>
+  </div>
+
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>User ID</th>
+        <th>Location ID</th>
+        <th>Registered By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let complaint of complaints; let i = index">
+        <td>{{ complaint.id }}</td>
+        <td>{{ complaint.category }}</td>
+        <td>{{ complaint.description }}</td>
+        <td>
+          <span
+            class="status-badge"
+            [ngClass]="{
+              'status-pending': complaint.status === 'Pending',
+              'status-progress': complaint.status === 'In Progress',
+              'status-resolved': complaint.status === 'Resolved'
+            }"
+          >
+            {{ complaint.status }}
+          </span>
+        </td>
+        <td>{{ complaint.createdAt | date : "short" }}</td>
+        <td>{{ complaint.userId }}</td>
+        <td>{{ complaint.locationId }}</td>
+        <td>{{ complaint.registeredBy }}</td>
+        <td>
+          <button (click)="editComplaint(i)" class="btn btn-gold m-r">
+            Edit
+          </button>
+          <button (click)="AssignComplaint(i)" class="btn btn-white">
+            Assign Tasks
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="complaints.length === 0">
+        <td colspan="9" style="text-align: center; padding: 30px">
+          No complaints found
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

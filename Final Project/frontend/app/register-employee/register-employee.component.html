@@ -1,0 +1,104 @@
+<div class="container">
+  <h2>Register Employee</h2>
+  <form #employeeForm="ngForm" (ngSubmit)="registerEmployee($event)">
+    <label>Name:</label>
+    <input
+      type="text"
+      [(ngModel)]="employee.name"
+      name="name"
+      required
+      #name="ngModel"
+    />
+
+    <label>Email:</label>
+    <input
+      type="email"
+      [(ngModel)]="employee.email"
+      name="email"
+      required
+      #email="ngModel"
+    />
+
+    <label>Phone:</label>
+    <input
+      type="text"
+      [(ngModel)]="employee.phone"
+      name="phone"
+      required
+      #phone="ngModel"
+    />
+
+    <label>Role:</label>
+    <input
+      type="text"
+      [(ngModel)]="employee.role"
+      name="role"
+      required
+      #role="ngModel"
+    />
+
+    <label>Department:</label>
+    <input
+      type="text"
+      [(ngModel)]="employee.department"
+      name="department"
+      required
+      #department="ngModel"
+    />
+
+    <label>Salary:</label>
+    <input
+      type="number"
+      [(ngModel)]="employee.salary"
+      name="salary"
+      required
+      #salary="ngModel"
+    />
+
+    <label>Shift Timing:</label>
+    <select
+      [(ngModel)]="employee.shiftTiming"
+      name="shiftTiming"
+      required
+      #shiftTiming="ngModel"
+    >
+      <option value="Morning">Morning</option>
+      <option value="Afternoon">Afternoon</option>
+      <option value="Evening">Evening</option>
+      <option value="Night">Night</option>
+    </select>
+
+    <label>Work Status:</label>
+    <select
+      [(ngModel)]="employee.workStatus"
+      name="workStatus"
+      required
+      #workStatus="ngModel"
+    >
+      <option value="Active">Active</option>
+      <option value="On Leave">On Leave</option>
+      <option value="Vacation">Vacation</option>
+      <option value="Others">Others</option>
+    </select>
+
+    <label>Date of Joining:</label>
+    <input
+      type="date"
+      [(ngModel)]="employee.dateOfJoining"
+      name="dateOfJoining"
+      required
+      #dateOfJoining="ngModel"
+    />
+
+    <label>Password:</label>
+    <input
+      type="password"
+      [(ngModel)]="employee.password"
+      name="password"
+      required
+      #password="ngModel"
+    />
+
+    <button type="submit" [disabled]="!employeeForm.valid">Register</button>
+  </form>
+</div>

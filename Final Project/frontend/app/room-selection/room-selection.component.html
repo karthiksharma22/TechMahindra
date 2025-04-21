@@ -1,0 +1,211 @@
+<!-- hotel-room-selection.component.html -->
+<div class="hotel-room-selection-container">
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading 3D Hotel View...</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- 3D Canvas -->
+    <div class="canvas-container">
+      <canvas #renderCanvas></canvas>
+
+      <!-- Control panel overlay -->
+      <div class="controls-overlay">
+        <div class="view-controls">
+          <button
+            class="control-button"
+            (click)="resetView()"
+            title="Reset View"
+          >
+            <i class="fas fa-home"></i>
+          </button>
+          <button
+            class="control-button"
+            (click)="toggleFilters()"
+            title="Filters"
+          >
+            <i class="fas fa-filter"></i>
+          </button>
+        </div>
+
+        <!-- Filters panel (toggleable) -->
+        <div class="filters-panel" [class.show]="showFilters">
+          <h3>Filters</h3>
+
+          <div class="filter-group">
+            <label>Floor:</label>
+            <select [(ngModel)]="selectedFloor">
+              <option [ngValue]="null">All Floors</option>
+              <option *ngFor="let floor of floors" [value]="floor">
+                Floor {{ floor }}
+              </option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Room Type:</label>
+            <select [(ngModel)]="selectedRoomType">
+              <option [ngValue]="null">All Types</option>
+              <option *ngFor="let type of roomTypes" [value]="type">
+                {{ type | titlecase }}
+              </option>
+            </select>
+          </div>
+
+          <div class="filter-group checkbox">
+            <label>
+              <input type="checkbox" [(ngModel)]="showSeaViewOnly" />
+              Sea View Only
+            </label>
+          </div>
+
+          <div class="filter-actions">
+            <button (click)="applyFilters()" class="apply-button">Apply</button>
+            <button (click)="clearFilters()" class="clear-button">Clear</button>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+          <div class="legend-item">
+            <div class="color-box available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="color-box booked"></div>
+            <span>Booked</span>
+          </div>
+          <div class="legend-item">
+            <div class="color-box selected"></div>
+            <span>Selected</span>
+          </div>
+        </div>
+
+        <!-- Help tips -->
+        <div class="help-tips">
+          <p><i class="fas fa-mouse"></i> Click & drag to rotate view</p>
+          <p><i class="fas fa-search-plus"></i> Scroll to zoom in/out</p>
+          <p><i class="fas fa-hand-pointer"></i> Click on a room to select</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room details sidebar -->
+    <div class="room-details-sidebar">
+      <div class="header">
+        <h2>Room Selection</h2>
+      </div>
+
+      <div class="content" *ngIf="!selectedRoom">
+        <div class="empty-selection">
+          <i class="fas fa-bed"></i>
+          <p>Select a room from the 3D view to see details</p>
+        </div>
+
+        <div class="hotel-info">
+          <h3>Seaside Resort & Spa</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> 123 Ocean Drive, Paradise Bay
+          </p>
+          <p>
+            <i class="fas fa-info-circle"></i> Our luxury beachfront hotel
+            features 100 rooms across 5 floors with stunning ocean views.
+          </p>
+
+          <div class="amenities">
+            <h4>Hotel Amenities</h4>
+            <ul>
+              <li><i class="fas fa-swimming-pool"></i> Infinity Pool</li>
+              <li><i class="fas fa-utensils"></i> 3 Restaurants</li>
+              <li><i class="fas fa-spa"></i> Full-Service Spa</li>
+              <li><i class="fas fa-dumbbell"></i> Fitness Center</li>
+              <li><i class="fas fa-umbrella-beach"></i> Private Beach</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="content selected-content" *ngIf="selectedRoom">
+        <div class="room-header">
+          <h3>Room {{ selectedRoom.roomNumber }}</h3>
+          <span class="room-type-badge" [ngClass]="selectedRoom.type">
+            {{ selectedRoom.type | titlecase }}
+          </span>
+        </div>
+
+        <div class="room-image">
+          <img
+            src="https://www.exoticadubai.tajhotels.com/wp-content/uploads/sites/470/2022/07/Presidential-Four-Bedroom-Sea-View-Suite-2-2000x1000.jpg"
+          />
+          <span class="room-feature" *ngIf="selectedRoom.hasSeaView">
+            <i class="fas fa-water"></i> Sea View
+          </span>
+        </div>
+
+        <div class="room-details">
+          <div class="detail-item">
+            <span class="label">Floor:</span>
+            <span class="value">{{ selectedRoom.floor }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Room Type:</span>
+            <span class="value">{{ selectedRoom.type | titlecase }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">View:</span>
+            <span class="value">{{
+              selectedRoom.hasSeaView ? "Ocean View" : "Garden View"
+            }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Price per Night:</span>
+            <span class="value price">${{ selectedRoom.price }}</span>
+          </div>
+        </div>
+
+        <div class="room-amenities">
+          <h4>Room Amenities</h4>
+          <div class="amenities-grid">
+            <div class="amenity-item" *ngIf="selectedRoom.type !== 'standard'">
+              <i class="fas fa-bath"></i>
+              <span>Jacuzzi</span>
+            </div>
+            <div class="amenity-item">
+              <i class="fas fa-wifi"></i>
+              <span>Free WiFi</span>
+            </div>
+            <div class="amenity-item">
+              <i class="fas fa-tv"></i>
+              <span>Smart TV</span>
+            </div>
+            <div class="amenity-item">
+              <i class="fas fa-snowflake"></i>
+              <span>AC</span>
+            </div>
+            <div class="amenity-item" *ngIf="selectedRoom.type === 'suite'">
+              <i class="fas fa-couch"></i>
+              <span>Living Area</span>
+            </div>
+            <div class="amenity-item">
+              <i class="fas fa-coffee"></i>
+              <span>Coffee Maker</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="focus-button" (click)="focusOnRoom(selectedRoom)">
+            <i class="fas fa-search"></i> Focus View
+          </button>
+          <button class="book-button" (click)="navigateToBooking()">
+            <i class="fas fa-calendar-check"></i> Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-footer></app-footer> -->

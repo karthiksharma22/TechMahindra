@@ -1,0 +1,133 @@
+<h1>File Your Complaints Here</h1>
+
+<div class="container">
+  <!-- Complaint Form Section -->
+  <div class="inventory-form">
+    <h2 class="accent-text">Register New Complaint</h2>
+    <form [formGroup]="complaintForm" (ngSubmit)="submitComplaint()">
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" formControlName="category" class="form-control">
+          <option value="">Select Category</option>
+          <option
+            *ngFor="
+              let category of [
+                'Manager',
+                'Receptionist',
+                'Cleaner',
+                'Front Desk Helper',
+                'Housekeeper',
+                'Chef',
+                'Maintenance Staff'
+              ]
+            "
+            [value]="category"
+          >
+            {{ category }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            complaintForm.get('category')?.invalid &&
+            complaintForm.get('category')?.touched
+          "
+          class="error"
+        >
+          Category is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          class="form-control"
+          required
+          placeholder="Please provide details about the issue"
+        ></textarea>
+        <div
+          *ngIf="
+            complaintForm.get('description')?.invalid &&
+            complaintForm.get('description')?.touched
+          "
+          class="error"
+        >
+          Description is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status:</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option value="">Select Status</option>
+          <option
+            *ngFor="let status of ['Pending', 'In Progress', 'Resolved']"
+            [value]="status"
+          >
+            {{ status }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            complaintForm.get('status')?.invalid &&
+            complaintForm.get('status')?.touched
+          "
+          class="error"
+        >
+          Status is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="createdAt">Created At:</label>
+        <input
+          id="createdAt"
+          formControlName="createdAt"
+          type="datetime-local"
+          class="form-control"
+          required
+        />
+        <div
+          *ngIf="
+            complaintForm.get('createdAt')?.invalid &&
+            complaintForm.get('createdAt')?.touched
+          "
+          class="error"
+        >
+          Date is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="registeredBy">Registered By:</label>
+        <select
+          id="registeredBy"
+          formControlName="registeredBy"
+          class="form-control"
+        >
+          <option value="">Select Registration Type</option>
+          <option value="GUEST">Guest</option>
+          <option value="EMPLOYEE">Employee</option>
+        </select>
+        <div
+          *ngIf="
+            complaintForm.get('registeredBy')?.invalid &&
+            complaintForm.get('registeredBy')?.touched
+          "
+          class="error"
+        >
+          Registered by is required
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="complaintForm.invalid"
+        class="btn btn-gold"
+      >
+        Submit Complaint
+      </button>
+    </form>
+  </div>
+</div>
