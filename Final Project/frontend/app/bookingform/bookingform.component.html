@@ -1,0 +1,46 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="form">
+  <label>Username:</label>
+  <input type="text" formControlName="userName" /><br />
+
+  <label>Number of People:</label>
+  <input type="number" formControlName="numberOfPeople" /><br />
+
+  <label>Start Date:</label>
+  <input type="date" formControlName="startDate" /><br />
+
+  <label>End Date:</label>
+  <input type="date" formControlName="endDate" /><br />
+
+  <label>Number of Adults:</label>
+  <input type="number" formControlName="numberOfAdults" /><br />
+
+  <label>Children Count:</label>
+  <input type="number" formControlName="childrenCount" /><br />
+
+  <button type="submit">Submit Booking</button>
+</form>
+
+<div class="loader-container" *ngIf="isLoading">
+  <img
+    src="https://cdn.pixabay.com/animation/2022/10/11/03/16/03-16-39-160_512.gif"
+    alt="Loading..."
+    class="loader-image"
+  />
+  <p>Processing Your Booking! Please Wait</p>
+</div>
+
+<div *ngIf="bookingResponse" class="cont">
+  <div class="booking-confirmation">
+    <div class="success-message">
+      <h1>Your booking is completed!</h1>
+    </div>
+
+    <div class="thank-you">Thank you for booking with us.</div>
+
+    <div class="booking-number-container">
+      <span class="booking-number">{{ bookingResponse.bookingNumber }}</span>
+      <button class="copy-button" (click)="copyToClipboard()">Copy</button>
+    </div>
+    <button class="copy-button" routerLink="/homepage">Done</button>
+  </div>
+</div>

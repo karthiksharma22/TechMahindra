@@ -1,0 +1,233 @@
+<div class="hotel-checkin-container">
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button
+      [class.active]="activeTab === 'check-in'"
+      (click)="setActiveTab('check-in')"
+    >
+      Check-in
+    </button>
+    <button
+      [class.active]="activeTab === 'new-booking'"
+      (click)="setActiveTab('new-booking')"
+    >
+      New Booking
+    </button>
+  </div>
+
+  <!-- Check-in Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'check-in'">
+    <h3>Guest Check-in</h3>
+    <p>Please enter the booking ID</p>
+
+    <div class="form-group">
+      <label for="checkInBookingId">Booking ID:</label>
+      <input
+        type="text"
+        id="checkInBookingId"
+        [(ngModel)]="checkInBookingNumber"
+        placeholder="Enter booking ID"
+      />
+    </div>
+
+    <button
+      class="submit-button"
+      (click)="verifyBooking()"
+      [disabled]="isLoading"
+    >
+      {{ isLoading ? "Processing..." : "Verify & Check-in" }}
+    </button>
+    <!-- Booking Details -->
+    <div class="booking-details" *ngIf="bookingDetails">
+      <h4>Booking Details</h4>
+      <div class="detail-item">
+        <span class="detail-label">Booking ID:</span>
+        {{ bookingDetails.bookingNumber }}
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Guest Name:</span>
+        {{ bookingDetails.userName }}
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Room Number:</span>
+        {{ bookingDetails.roomNumber }}
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Status:</span>
+        <span [class]="'status-' + bookingDetails.status.toLowerCase()">
+          {{ bookingDetails.status }}
+        </span>
+      </div>
+
+      <button
+        class="submit-button confirm-button"
+        (click)="completeCheckIn()"
+        [disabled]="isLoading || bookingDetails.status === 'CHECKED_IN'"
+      >
+        {{ isLoading ? "Processing..." : "Complete Check-in" }}
+      </button>
+
+      <!-- <div *ngIf="bookingDetails.status === 'CHECKED_IN'" class="warning-message">
+        This booking is already checked in
+      </div> -->
+    </div>
+
+    <div class="error-message" *ngIf="checkInErrorMessage">
+      {{ checkInErrorMessage }}
+    </div>
+
+    <div class="success-message" *ngIf="checkInSuccessMessage">
+      {{ checkInSuccessMessage }}
+    </div>
+  </div>
+
+  <!-- New Booking Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'new-booking'">
+    <h3>New Booking</h3>
+
+    <div class="user-type-toggle">
+      <button [class.active]="isExistingUser" (click)="toggleUserType(true)">
+        Existing User
+      </button>
+      <button [class.active]="!isExistingUser" (click)="toggleUserType(false)">
+        New User
+      </button>
+    </div>
+
+    <!-- Existing User Search -->
+    <div class="existing-user-search" *ngIf="isExistingUser && !userFound">
+      <h4>Search for Existing User</h4>
+
+      <div class="form-group">
+        <label for="searchEmail">Email:</label>
+        <input
+          type="email"
+          id="searchEmail"
+          [(ngModel)]="searchEmail"
+          placeholder="Enter email"
+        />
+      </div>
+
+      <button
+        class="search-button"
+        (click)="searchUser()"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? "Searching..." : "Search" }}
+      </button>
+    </div>
+
+    <!-- User Found or New User Form -->
+    <div class="user-details-form" *ngIf="!isExistingUser || userFound">
+      <h4>{{ userFound ? "User Found" : "New User Details" }}</h4>
+
+      <div class="form-group">
+        <label for="userName">Full Name:</label>
+        <input
+          type="text"
+          id="userName"
+          [(ngModel)]="user.username"
+          name="username"
+          placeholder="Enter full name"
+          class="form-control"
+          [disabled]="userFound"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="userEmail">Email:</label>
+        <input
+          type="email"
+          id="userEmail"
+          [(ngModel)]="user.email"
+          name="email"
+          placeholder="Enter email"
+          class="form-control"
+          [disabled]="userFound"
+          required
+        />
+      </div>
+
+      <!-- Aadhar Number -->
+      <div class="form-group">
+        <label for="aadharNumber">Aadhar Number:</label>
+        <input
+          type="text"
+          id="aadharNumber"
+          [(ngModel)]="user.aadharNumber"
+          name="aadharNumber"
+          placeholder="Enter Aadhar Number (12 digits)"
+          class="form-control"
+          pattern="\d{12}"
+          [disabled]="userFound"
+          required
+        />
+      </div>
+
+      <!-- Age -->
+      <div class="form-group">
+        <label for="userAge">Age:</label>
+        <input
+          type="number"
+          id="userAge"
+          [(ngModel)]="user.age"
+          name="age"
+          placeholder="Enter age"
+          class="form-control"
+          min="1"
+          max="120"
+          required
+        />
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label for="userGender">Gender:</label>
+        <select
+          id="userGender"
+          [(ngModel)]="user.gender"
+          name="gender"
+          class="form-control"
+          required
+        >
+          <option value="" disabled selected>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="userPassword">Password:</label>
+        <input
+          type="password"
+          id="userPassword"
+          [(ngModel)]="user.password"
+          name="password"
+          placeholder="Enter password"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <button
+        class="submit-button"
+        (click)="createBooking()"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? "Processing..." : "Create Booking" }}
+      </button>
+    </div>
+
+    <div class="error-message" *ngIf="newBookingErrorMessage">
+      {{ newBookingErrorMessage }}
+    </div>
+
+    <div class="success-message" *ngIf="newBookingSuccessMessage">
+      {{ newBookingSuccessMessage }}
+    </div>
+  </div>
+</div>

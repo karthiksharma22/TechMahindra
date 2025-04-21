@@ -1,0 +1,91 @@
+<div class="container">
+  <h1>Manage Employees</h1>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search employees by name or email or role.."
+      [(ngModel)]="searchTerm"
+      (input)="filterEmployees()"
+    />
+  </div>
+
+  <!-- Employee List -->
+  <table class="employee-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Work Status</th>
+        <th>Shift Timing</th>
+        <th>Actions</th>
+        <th>Availability</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of filteredEmployees">
+        <td>{{ employee.employeeId }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.role }}</td>
+        <td>{{ employee.workStatus }}</td>
+        <td>{{ employee.shiftTiming }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="selectEmployee(employee)">
+            Edit
+          </button>
+        </td>
+        <td>
+          <select
+            [(ngModel)]="employee.workStatus"
+            (change)="setWorkStatus(employee, employee.workStatus)"
+            class="sort-dropdown"
+          >
+            <option *ngFor="let status of workStatusOptions" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Edit Employee Form -->
+  <div *ngIf="selectedEmployee" class="edit-form">
+    <h2>Edit Employee</h2>
+    <form [formGroup]="employeeForm" (ngSubmit)="updateEmployee()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" type="text" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <input id="role" formControlName="role" type="text" />
+      </div>
+      <div class="form-group">
+        <label for="workStatus">Work Status</label>
+        <select id="workStatus" formControlName="workStatus">
+          <option *ngFor="let status of workStatusOptions" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="shiftTiming">Shift Timing</label>
+        <input id="shiftTiming" formControlName="shiftTiming" type="text" />
+      </div>
+      <button type="submit" class="btn btn-save">Save Changes</button>
+      <button type="button" class="btn btn-cancel" (click)="resetForm()">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>

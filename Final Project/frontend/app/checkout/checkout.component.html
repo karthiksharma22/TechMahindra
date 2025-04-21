@@ -1,0 +1,40 @@
+<div class="tab-content">
+  <h3>Guest Checkout</h3>
+  <p>Please enter the room number and phone number to complete checkout.</p>
+
+  <div class="form-group">
+    <label for="checkoutRoomNumber">Room Number:</label>
+    <input
+      type="text"
+      id="checkoutRoomNumber"
+      [(ngModel)]="checkoutRoomNumber"
+      placeholder="Enter room number"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="checkoutemail">Email:</label>
+    <input
+      type="email"
+      id="checkoutemail"
+      [(ngModel)]="checkoutemail"
+      placeholder="Enter Email"
+    />
+  </div>
+
+  <button
+    class="submit-button"
+    (click)="handleCheckout()"
+    [disabled]="isLoading"
+  >
+    {{ isLoading ? "Processing..." : "Complete Checkout" }}
+  </button>
+
+  <div class="error-message" *ngIf="checkoutErrorMessage">
+    {{ checkoutErrorMessage }}
+  </div>
+
+  <div class="success-message" *ngIf="checkoutSuccessMessage">
+    {{ checkoutSuccessMessage }}
+  </div>
+</div>
