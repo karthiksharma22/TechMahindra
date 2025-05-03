@@ -6,13 +6,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 	<groupId>com.ecommerce</groupId>
 	<artifactId>ecommerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>E-commerce</name>
-	<description>An eccommerce project</description>
+	<description>This is a sample E-Commerce Platform built with springboot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -45,7 +45,7 @@
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.29</version> <!-- Use the latest stable version -->
+		    <version>8.0.29</version> 
 		</dependency>
 
 		<dependency>
